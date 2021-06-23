@@ -120,7 +120,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
-  let timeInSeconds = 60;
+  let timeInSeconds = 61;
   // Display Time function
   const displayTime = (time) => {
     // convert to seconds, round it to remove decimal
