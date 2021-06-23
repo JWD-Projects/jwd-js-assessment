@@ -19,6 +19,12 @@
       5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers
 *************************** */
 
+const scoreDisplay = document.getElementById('score');;
+const submitBtn = document.getElementById('btnSubmit');
+const resetBtn = document.getElementById('btnReset');
+const timer =  document.getElementById('time');
+
+
 window.addEventListener('DOMContentLoaded', () => {
   const start = document.querySelector('#start');
   start.addEventListener('click', function (e) {
@@ -44,6 +50,17 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
+    {
+      q: 'Which team won the NBA championship in 2020',
+      o: ['Celtics', 'Heat', 'Lakers', 'Nuggets'],
+      a: 2,
+    },
+    {
+      q: 'Who won the 2021 French Open',
+      o: ['Nadal', 'Federer', 'Djokovic', 'Murray'],
+      a: 2,
+    }
+
   ];
 
   // function to Display the quiz questions and answers from the object
@@ -63,6 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   };
 
+
   // Calculate the score
   const calculateScore = () => {
     let score = 0;
@@ -76,14 +94,72 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (quizItem.a == i) {
           //change background color of li element here
+          liElement.style.backgroundColor = 'green';
         }
 
         if (radioElement.checked) {
           // code for task 1 goes here
+          
+          // if selected answer matches actual answer increment score
+          if (i == quizItem.a) {
+            score++
+          }
+         
+         
         }
       }
+     
     });
+
+    // show score
+   scoreDisplay.innerHTML = `You Scored: ${score}`;
+   // Hide submit button
+   submitBtn.style.display = 'none'
+
   };
+
+
+
+  let timeInSeconds = 60;
+  // Display Time function
+  const displayTime = (time) => {
+    // convert to seconds, round it to remove decimal
+    let min = Math.floor(time / 60);
+    //  modulus gives us the remainder which are the seconds e.g. 122 % 60 = 2
+    let sec = Math.floor(time % 60);
+    timer.innerHTML = `${min<10 ? '0' : ''}${min}:${sec<10 ? '0' : ''}${sec}`;
+  }
+
+
+
+  //  Count Down function
+const countdown = setInterval(() => {
+  // decrement the time every 1 second and display it
+
+  timeInSeconds--
+  displayTime(timeInSeconds)
+
+if (timeInSeconds <= 0) {
+  // when time get to 0 seconds calculate the score
+  calculateScore()
+  // clears the interval which has been set by setInterval() 
+ clearInterval(countdown)
+
+}
+
+}, 1000)  
+
+
+
+
+
+
+  
+// Event handlers
+submitBtn.addEventListener('click', calculateScore);
+resetBtn.addEventListener('click', function(){location.reload()});
+
+ 
 
   // call the displayQuiz function
   displayQuiz();
