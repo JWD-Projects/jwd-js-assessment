@@ -115,7 +115,8 @@ window.addEventListener('DOMContentLoaded', () => {
    scoreDisplay.innerHTML = `You Scored: ${score}`;
    // Hide submit button
    submitBtn.style.display = 'none'
-
+   // stop timer on submit
+ clearInterval(countdown)
   };
 
 
